@@ -1,0 +1,34 @@
+{
+  "name": "websimulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/graphman65/websimulator.git"
+  },
+  "author": "graphman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/graphman65/websimulator/issues"
+  },
+  "homepage": "https://github.com/graphman65/websimulator#readme",
+  "devDependencies": {
+    "html-dist": "^0.1.0",
+    "jspm": "^0.16.19"
+  },
+  "jspm": {
+    "dependencies": {
+      "jquery": "npm:jquery@^2.2.0",
+      "three": "github:mrdoob/three.js@master"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
