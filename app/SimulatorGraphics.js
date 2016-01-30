@@ -1,18 +1,13 @@
 import THREE from "three";
 import Detector from "../vendor/Detector";
-import ColladaLoader from "../vendor/ColladaLoader";
-import WindowResize from "../vendor/WindowResize";
-import FullScreen from "../vendor/FullScreen";
 import OrbitControls from "../vendor/OrbitControls";
 import Stats from "../vendor/Stats";
 
-export default class SimulatorGraphics {
-  constructor(simulator, element) {
-    this.container = element;
+import * as Utils from "./Utils";
 
-    // init ColladaLoader
-    this.loader = new ColladaLoader();
-    this.loader.options.convertUpAxis = true;
+export default class SimulatorGraphics {
+  constructor(simulator) {
+    this.simulator = simulator;
 
     //init Renderer
     if(Detector.webgl) {
@@ -21,11 +16,13 @@ export default class SimulatorGraphics {
       this.renderer = new THREE.CanvasRenderer();
     }
 
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.scene = new THREE.Scene();
 
-    this.camera = new THREE.PerspectiveCamera(75, this.container.clientWidth/this.container.clientHeight, 0.1, 1000);
+    this.scene.add(new THREE.AxisHelper(50));
+
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.set(0, 3, 8);
     this.camera.lookAt(this.scene.position);
 
@@ -34,19 +31,38 @@ export default class SimulatorGraphics {
     this.stats = new Stats();
     this.stats.domElement.classList.add("stats");
 
-    this.container.appendChild(this.renderer.domElement);
-    this.container.appendChild(this.stats.domElement);
+    document.body.appendChild(this.renderer.domElement);
+    document.body.appendChild(this.stats.domElement);
 
-    WindowResize(this.renderer, this.camera);
-    FullScreen.bindKey({charCode: "m".charCodeAt(0)});
+    Utils.enableCanvasResize(this.renderer, this.camera);
 
+    this.initLights();
     this.animate();
   }
 
+  initLights() {
+    let light1	= new THREE.DirectionalLight("white", 0.225);
+    light1.position.set(2.6,1,3);
+    light1.name	= "Back light";
+    this.scene.add(light1);;
+
+    let light2	= new THREE.DirectionalLight("white", 0.375);
+    light2.position.set(-2, -1, 0);
+    light2.name 	= "Key light";
+    this.scene.add(light2);
+
+    let light3	= new THREE.DirectionalLight("white", 0.75);
+    light3.position.set(3, 3, 2);
+    light3.name	= "Fill light";
+    this.scene.add(light3);
+  }
+
   animate() {
-    requestAnimationFrame(() => this.animate());
-    this.renderer.render(this.scene, this.camera);
-    this.controls.update();
-    this.stats.update();
+    if(this.simulator.socket.connected) {
+      requestAnimationFrame(() => this.animate());
+      this.renderer.render(this.scene, this.camera);
+      this.controls.update();
+      this.stats.update();
+    }
   }
 }

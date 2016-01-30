@@ -1,8 +1,11 @@
-import $ from "jquery";
+import "babel-polyfill";
 import Simulator from "./Simulator";
+import * as View from "./View";
+import Vue from "vue";
 
-$(() => {
-  const host = "localhost";
-  const port = "5000";
-  let simulator = new Simulator(document.body, host, port);
+View.ready(() => {
+  View.getById("connect-btn").addEventListener("click", (event) => {
+    event.preventDefault();
+    let simulator = new Simulator(View.getById("host").value, View.getById("port").value);
+  });
 });
