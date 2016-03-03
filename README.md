@@ -1,8 +1,8 @@
-## websimulator
+# websimulator
 
 ## Format des messages
 
-#Creer un object :
+### Creer un object :
     {
       "id": 10,
       "type": "new",
@@ -16,7 +16,7 @@
       "color": "0x00FF00"
     }
 
-# Bouger un object :
+### Bouger un object :
     {
       "id": 10,
       "type": "move",
@@ -28,7 +28,7 @@
       "rotation": 10,
     }
 
-# Supprimer un object :
+### Supprimer un object :
     {
       "id": 10,
       "type": "remove"
