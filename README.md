@@ -33,3 +33,19 @@
       "id": 10,
       "type": "remove"
     }
+### Creer un pave
+    {
+      "id": 10,
+      "type": "newcuboid",
+      "scale": {
+        "x": 10,
+        "y": 10,
+        "z": 10
+      },
+      "position": {
+        "x": 10,
+        "y": 10,
+        "z": 10
+      },
+      "rotation": 10,
+    }
