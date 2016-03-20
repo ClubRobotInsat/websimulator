@@ -43,13 +43,14 @@ export default class SimulatorWebSocket {
     }
 
     onMessage(event) {
+        console.log(event.data);
         let messages = JSON.parse(event.data);
         for (let message of messages) {
             let type = message["type"];
             let id = message["id"];
             if(!type) {
                 console.error("Bad message pattern : missing type.");
-            } else if(!id) {
+            } else if(!message.hasOwnProperty("id")) {
                 console.error("Bad message pattern : missing id.");
             } else {
                 this.simulator.world.handleMessage(type, id, message);

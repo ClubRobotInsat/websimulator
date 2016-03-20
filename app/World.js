@@ -57,14 +57,17 @@ export default class World {
             let model = message["modelName"];
             let position = message["position"];
             let rotation = message["rotation"];
-            let color = parseInt(message["color"]);
-
+            let color = 0x00FF00;
+            if(message.hasOwnProperty("color")) {
+                color = parseInt(message["color"]);
+            }     
+            
             ModelLoader.load(`../models/${model}.dae`).then((geometry) => {
                 let obj = new WorldObject(id, geometry, color);
 
                 obj.position.x = position.x;
-                obj.position.y = position.z;
-                obj.position.z = position.y;
+                obj.position.y = position.y;
+                obj.position.z = position.z;
                 obj.rotation.y = rotation;
                 this.addObject(obj);
             });
@@ -75,8 +78,8 @@ export default class World {
             if(this.objects.hasOwnProperty(id)) {
                 let obj = this.objects[id];
                 obj.position.x = position.x;
-                obj.position.y = position.z;
-                obj.position.z = position.y;
+                obj.position.y = position.y;
+                obj.position.z = position.z;
                 obj.rotation.y = rotation;
 
                 if(this.selected = obj) {
@@ -88,6 +91,23 @@ export default class World {
             if(this.objects.hasOwnProperty(id)) {
                 this.removeObject(id);
             }
+        } else if(type == "newcuboid") {
+            let position = message["position"];
+            let rotation = message["rotation"];
+            let scale = message["scale"];
+            let color = 0x00FF00;
+            if(message.hasOwnProperty("color")) {
+                color = parseInt(message["color"]);
+            }     
+            let geometry = new THREE.BoxGeometry(scale.x, scale.y, scale.z);
+            
+            let obj = new WorldObject(id, geometry, color);
+            
+            obj.position.x = position.x;
+            obj.position.y = position.y;
+            obj.position.z = position.z;
+            obj.rotation.y = rotation;  
+            this.addObject(obj);
         } else {
             console.error("FUCK OFF");
         }

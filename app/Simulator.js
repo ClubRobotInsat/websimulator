@@ -16,6 +16,7 @@ export default class Simulator {
                 this.world = new World(this.graphics);
 
             });
+            
             View.goodIp();
         } catch (e) {
             View.badIp();

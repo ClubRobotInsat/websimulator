@@ -63,6 +63,6 @@ export default class SimulatorGraphics {
             this.renderer.render(this.scene, this.camera);
             this.controls.update();
             this.stats.update();
-        }
+        }    
     }
 }
