@@ -5,7 +5,7 @@
 ### Creer un object :
     {
       "id": 10,
-      "type": "new",
+      "type": "newmodel",
       "modelName": "model",
       "position": {
         "x": 10,
@@ -49,3 +49,17 @@
       },
       "rotation": 10,
     }
+### Creer un cylinder
+    {
+      "id": 10,
+      "type": "newcylinder",
+      "radius": 10,
+      "height": 20,
+      "position": {
+        "x": 10,
+        "y": 10,
+        "z": 10
+      },
+      "rotation": 10,
+    }
+
