@@ -58,7 +58,7 @@ export default class SimulatorGraphics {
     }
 
     animate() {
-        if(this.simulator.socket.connected) {
+        if(this.simulator.socket.connected || this.simulator.debug) {
             requestAnimationFrame(() => this.animate());
             this.renderer.render(this.scene, this.camera);
             this.controls.update();

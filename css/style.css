@@ -49,3 +49,12 @@ body {
   width: 400px;
   display: none;
 }
+
+#debug {
+  float: right;
+} 
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+}

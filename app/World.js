@@ -1,7 +1,9 @@
 import THREE from "three";
 import WorldObject from "./WorldObject";
+import CylinderObject from "./CylinderObject";
+import CubeObject from "./CubeObject";
+import ModelObject from "./ModelObject";
 
-import * as ModelLoader from "./ModelLoader";
 import * as View from "./View";
 
 export default class World {
@@ -37,6 +39,9 @@ export default class World {
 
             this.raycaster.setFromCamera(mousePosition, this.graphics.camera);
             let objs = this.raycaster.intersectObjects(Object.keys(this.objects).map(id => this.objects[id]));
+
+            if(this.selected != null) this.selected.setSelected(false);
+
             if(objs.length > 0) {
                 if(objs[0].object instanceof WorldObject) {
                     this.selected = objs[0].object;
@@ -45,7 +50,6 @@ export default class World {
                     View.showInfos();
                 }
             } else {
-                if(this.selected != null) this.selected.setSelected(false);
                 this.selected = null;
                 View.hideInfos();
             }
@@ -53,7 +57,7 @@ export default class World {
     }
 
     handleMessage(type, id, message) {
-        if(type == "new") {
+        if(type == "newmodel") {
             let model = message["modelName"];
             let position = message["position"];
             let rotation = message["rotation"];
@@ -61,16 +65,13 @@ export default class World {
             if(message.hasOwnProperty("color")) {
                 color = parseInt(message["color"]);
             }     
-            
-            ModelLoader.load(`../models/${model}.dae`).then((geometry) => {
-                let obj = new WorldObject(id, geometry, color);
+            let obj = new ModelObject(id, model, color);
+            obj.position.x = position.x;
+            obj.position.y = position.y;
+            obj.position.z = position.z;
+            obj.rotation.y = rotation;
+            this.addObject(obj);
 
-                obj.position.x = position.x;
-                obj.position.y = position.y;
-                obj.position.z = position.z;
-                obj.rotation.y = rotation;
-                this.addObject(obj);
-            });
         } else if(type == "move") {
 
             let position = message["position"];
@@ -99,15 +100,29 @@ export default class World {
             if(message.hasOwnProperty("color")) {
                 color = parseInt(message["color"]);
             }     
-            let geometry = new THREE.BoxGeometry(scale.x, scale.y, scale.z);
-            
-            let obj = new WorldObject(id, geometry, color);
+            let obj = new CubeObject(id, scale.x, scale.y, scale.z, color);
+            obj.position.x = position.x;
+            obj.position.y = position.y;
+            obj.position.z = position.z;
+            obj.rotation.y = rotation;  
+            this.addObject(obj);
+        } else if(type == "newcylinder") {
+            let position = message["position"];
+            let rotation = message["rotation"];
+            let radius = parseInt(message["radius"]);
+            let height = parseInt(message["height"]);
+            let color = 0x00FF00;
+            if(message.hasOwnProperty("color")) {
+                color = parseInt(message["color"]);
+            }     
+            let obj = new CylinderObject(id, radius, height, color);
             
             obj.position.x = position.x;
             obj.position.y = position.y;
             obj.position.z = position.z;
             obj.rotation.y = rotation;  
             this.addObject(obj);
+
         } else {
             console.error("FUCK OFF");
         }
