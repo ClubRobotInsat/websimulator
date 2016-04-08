@@ -55,6 +55,8 @@ export default class SimulatorGraphics {
         light3.position.set(3, 3, 2);
         light3.name	= "Fill light";
         this.scene.add(light3);
+	var light = new THREE.AmbientLight(0xA6A6A6); // soft white light
+	this.scene.add(light);
     }
 
     animate() {
@@ -63,6 +65,6 @@ export default class SimulatorGraphics {
             this.renderer.render(this.scene, this.camera);
             this.controls.update();
             this.stats.update();
-        }    
+        }
     }
 }

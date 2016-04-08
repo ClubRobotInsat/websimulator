@@ -2,9 +2,18 @@ import THREE from "three";
 import WorldObject from "./WorldObject";
 import CylinderObject from "./CylinderObject";
 import CubeObject from "./CubeObject";
-import ModelObject from "./ModelObject";
+
+import * as ModelLoader from "./ModelLoader";
+
 
 import * as View from "./View";
+
+const defaultMatrix = [
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+];
 
 export default class World {
     constructor(graphics) {
@@ -15,6 +24,9 @@ export default class World {
     }
 
     addObject(obj) {
+	if(this.objects.hasOwnProperty(obj.objectId)) {
+	    return;
+	}
         this.objects[obj.objectId] = obj;
         this.graphics.scene.add(obj);
     }
@@ -34,8 +46,8 @@ export default class World {
         this.graphics.renderer.domElement.addEventListener("click", (event) => {
             let mousePosition = new THREE.Vector2(
                 (event.clientX / window.innerWidth) * 2 - 1,
-                -(event.clientY / window.innerHeight) * 2 + 1
-                );
+                    -(event.clientY / window.innerHeight) * 2 + 1
+            );
 
             this.raycaster.setFromCamera(mousePosition, this.graphics.camera);
             let objs = this.raycaster.intersectObjects(Object.keys(this.objects).map(id => this.objects[id]));
@@ -56,34 +68,35 @@ export default class World {
         });
     }
 
+
+    getOrDefault(message, key, def) {
+	if(message.hasOwnProperty(key)) return message[key];
+	return def;
+    }
+
+
     handleMessage(type, id, message) {
         if(type == "newmodel") {
-            let model = message["modelName"];
-            let position = message["position"];
-            let rotation = message["rotation"];
-            let color = 0x00FF00;
-            if(message.hasOwnProperty("color")) {
-                color = parseInt(message["color"]);
-            }     
-            let obj = new ModelObject(id, model, color);
-            obj.position.x = position.x;
-            obj.position.y = position.y;
-            obj.position.z = position.z;
-            obj.rotation.y = rotation;
-            this.addObject(obj);
+            let model = this.getOrDefault(message, "modelName", "");
+            let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
+            let color = parseInt(this.getOrDefault(message, "color", "0x00FF00"));
+
+	    ModelLoader.load(`../models/${model}.dae`).then((geometry) => {
+		let obj = new WorldObject(id, geometry, color);
+		obj.matrix.set(obj, matrix);
+		this.addObject(obj);
+	    });
 
         } else if(type == "move") {
 
-            let position = message["position"];
-            let rotation = message["rotation"];
             if(this.objects.hasOwnProperty(id)) {
                 let obj = this.objects[id];
-                obj.position.x = position.x;
-                obj.position.y = position.y;
-                obj.position.z = position.z;
-                obj.rotation.y = rotation;
 
-                if(this.selected = obj) {
+		let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
+		obj.matrix.set(obj, matrix);
+
+
+                if(this.selected == obj) {
                     this.updateInfo(obj);
                 }
             }
@@ -93,38 +106,27 @@ export default class World {
                 this.removeObject(id);
             }
         } else if(type == "newcuboid") {
-            let position = message["position"];
-            let rotation = message["rotation"];
-            let scale = message["scale"];
-            let color = 0x00FF00;
-            if(message.hasOwnProperty("color")) {
-                color = parseInt(message["color"]);
-            }     
-            let obj = new CubeObject(id, scale.x, scale.y, scale.z, color);
-            obj.position.x = position.x;
-            obj.position.y = position.y;
-            obj.position.z = position.z;
-            obj.rotation.y = rotation;  
+            let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
+            let color = parseInt(this.getOrDefault(message, "color", 0x00FF00));
+
+            let obj = new CubeObject(id, 1, 1, 1, color);
+            obj.matrix.set(obj, matrix);
+
             this.addObject(obj);
         } else if(type == "newcylinder") {
-            let position = message["position"];
-            let rotation = message["rotation"];
-            let radius = parseInt(message["radius"]);
-            let height = parseInt(message["height"]);
-            let color = 0x00FF00;
-            if(message.hasOwnProperty("color")) {
-                color = parseInt(message["color"]);
-            }     
+	    let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
+
+            let radius = parseFloat(this.getOrDefault(message, "radius", 0.0));
+            let height = parseFloat(this.getOrDefault(message, "height", 0.0));
+	    let color = parseInt(this.getOrDefault(message, "color", 0x00FF00));
+
             let obj = new CylinderObject(id, radius, height, color);
-            
-            obj.position.x = position.x;
-            obj.position.y = position.y;
-            obj.position.z = position.z;
-            obj.rotation.y = rotation;  
+            obj.matrix.set(obj, matrix);
+
             this.addObject(obj);
 
         } else {
-            console.error("FUCK OFF");
+            console.error("The type", type, "is not valid.");
         }
     }
 }

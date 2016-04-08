@@ -21,9 +21,9 @@ View.ready(() => {
     View.getById("connect-btn").addEventListener("click", (event) => {
         event.preventDefault();
         let simulator = new Simulator(View.getById("host").value, View.getById("port").value, debug);
-        if(debug) {
-			window.simulator = simulator;    	
-        }
+        // if(debug) {
+			window.simulator = simulator;
+        // }
     });
 	console.log("WebSimulator loaded successfully.");
 
