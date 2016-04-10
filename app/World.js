@@ -83,7 +83,7 @@ export default class World {
 
 	    ModelLoader.load(`../models/${model}.dae`).then((geometry) => {
 		let obj = new WorldObject(id, geometry, color);
-		obj.matrix.set(obj, matrix);
+		obj.matrix.set.apply(obj.matrix, matrix);
 		this.addObject(obj);
 	    });
 
@@ -93,7 +93,7 @@ export default class World {
                 let obj = this.objects[id];
 
 		let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
-		obj.matrix.set(obj, matrix);
+		obj.matrix.set.apply(obj.matrix, matrix);
 
 
                 if(this.selected == obj) {
@@ -110,7 +110,8 @@ export default class World {
             let color = parseInt(this.getOrDefault(message, "color", 0x00FF00));
 
             let obj = new CubeObject(id, 1, 1, 1, color);
-            obj.matrix.set(obj, matrix);
+            console.log(matrix);
+            obj.matrix.set.apply(obj.matrix, matrix);
 
             this.addObject(obj);
         } else if(type == "newcylinder") {
@@ -121,7 +122,7 @@ export default class World {
 	    let color = parseInt(this.getOrDefault(message, "color", 0x00FF00));
 
             let obj = new CylinderObject(id, radius, height, color);
-            obj.matrix.set(obj, matrix);
+            obj.matrix.set.apply(obj.matrix, matrix);
 
             this.addObject(obj);
 
