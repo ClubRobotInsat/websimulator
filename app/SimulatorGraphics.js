@@ -24,6 +24,7 @@ export default class SimulatorGraphics {
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         this.camera.position.set(0, 3, 8);
+	this.camera.up.set( 0, 0, 1 );
         this.camera.lookAt(this.scene.position);
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
