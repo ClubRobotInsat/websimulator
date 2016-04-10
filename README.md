@@ -7,12 +7,7 @@
       "id": 10,
       "type": "newmodel",
       "modelName": "model",
-      "position": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "rotation": 10,
+      "matrix": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       "color": "0x00FF00"
     }
 
@@ -20,12 +15,7 @@
     {
       "id": 10,
       "type": "move",
-      "position": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "rotation": 10,
+      "matrix": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
 ### Supprimer un object :
@@ -37,17 +27,7 @@
     {
       "id": 10,
       "type": "newcuboid",
-      "scale": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "position": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "rotation": 10,
+      "matrix": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 ### Creer un cylinder
     {
@@ -55,11 +35,6 @@
       "type": "newcylinder",
       "radius": 10,
       "height": 20,
-      "position": {
-        "x": 10,
-        "y": 10,
-        "z": 10
-      },
-      "rotation": 10,
+      "matrix": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
