@@ -38,3 +38,10 @@
       "matrix": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
+### Afficher un message dans la console
+    {
+      "type": "log",
+      "message": "Hey sup ?"
+    
+    }
+
