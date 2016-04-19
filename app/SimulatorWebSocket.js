@@ -47,6 +47,11 @@ export default class SimulatorWebSocket {
         let messages = JSON.parse(event.data);
         for (let message of messages) {
             let type = message["type"];
+            if(type == "log") {
+              View.addToConsole(message["message"]);
+              return;
+            }
+
             let id = message["id"];
             if(!type) {
                 console.error("Bad message pattern : missing type.");

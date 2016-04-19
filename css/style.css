@@ -52,9 +52,25 @@ body {
 
 #debug {
   float: right;
-} 
+}
 
 .title {
   font-size: 18px;
   font-weight: 500;
+}
+
+#console{
+  opacity: 0.9;
+  background:#000;
+  width:60%;
+  height:300px;
+  top:20px;
+  right:20px;
+  overflow: auto;
+  font-size: 12px;
+  position:fixed;
+  z-index:999;
+  display:none;
+  color:#1ec503;
+  text-align:left;
 }

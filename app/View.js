@@ -41,3 +41,10 @@ export function hideInfos() {
 export function disconnected() {
     getById("disconnected").style.display = "block";
 };
+
+export function addToConsole(string) {
+  let parent = document.createElement("div");
+  let node = document.createTextNode(string);
+  parent.appendChild(node);
+  getById("messages").appendChild(parent);
+};
