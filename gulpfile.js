@@ -16,7 +16,7 @@ gulp.task("buildjs", function() {
   } catch (e) {
     console.log("dist file already exists.")
   }
-  del("dist/*");
+  del("dist/**");
   return gulp.src("app/main.js")
     .pipe(jspm({selfExecutingBundle: true}))
     .pipe(uglify())
@@ -42,5 +42,9 @@ gulp.task("inject", function() {
     .pipe(gulp.dest("dist"));
 });
 
+gulp.task("copymodels", function() {
+    return gulp.src(["models/**/*"]).pipe(gulp.dest("dist/models"));
+});
 
-gulp.task("default", ["buildjs", "buildcss", "inject"]);
+
+gulp.task("default", ["buildjs", "buildcss", "inject", "copymodels"]);
