@@ -1,10 +1,9 @@
 import THREE from "three";
 import WorldObject from "./WorldObject";
 import CylinderObject from "./CylinderObject";
-import CubeObject from "./CubeObject";
+import CuboidObject from "./CuboidObject";
 
 import * as ModelLoader from "./ModelLoader";
-
 
 import * as View from "./View";
 
@@ -37,8 +36,10 @@ export default class World {
   }
 
   updateInfo(obj) {
-    View.getById("selected-position").innerText = obj.position.x + "," + obj.position.y + "," + obj.position.z;
-    View.getById("selected-rotation").innerText = obj.rotation.x + "," + obj.rotation.y + "," + obj.rotation.z;
+    let position = new THREE.Vector3();
+    position.setFromMatrixPosition(obj.matrix);
+    document.getElementById("selected-id").innerText = obj.objectId;
+    document.getElementById("selected-position").innerText = position.x + "," + position.y + "," + position.z;
   }
 
   initRaycast() {
@@ -84,7 +85,6 @@ export default class World {
       ModelLoader.load(`../models/${model}.dae`).then((geometry) => {
         let obj = new WorldObject(id, geometry, color);
         obj.matrix.set.apply(obj.matrix, matrix);
-        console.log(obj.matrix.toArray());
 
         this.addObject(obj);
       });
@@ -96,9 +96,6 @@ export default class World {
 
         let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
         obj.matrix.set.apply(obj.matrix, matrix);
-        console.log(obj.matrix.toArray());
-
-
 
         if(this.selected == obj) {
           this.updateInfo(obj);
@@ -113,11 +110,8 @@ export default class World {
       let matrix = this.getOrDefault(message, "matrix", defaultMatrix);
       let color = parseInt(this.getOrDefault(message, "color", 0x00FF00));
 
-      let obj = new CubeObject(id, 1, 1, 1, color);
-      console.log(matrix);
+      let obj = new CuboidObject(id, 1, 1, 1, color);
       obj.matrix.set.apply(obj.matrix, matrix);
-      console.log(obj.matrix.toArray());
-
 
       this.addObject(obj);
     } else if(type == "newcylinder") {
@@ -129,7 +123,6 @@ export default class World {
 
       let obj = new CylinderObject(id, radius, height, color);
       obj.matrix.set.apply(obj.matrix, matrix);
-      console.log(obj.matrix.toArray());
       this.addObject(obj);
 
     } else {

@@ -43,7 +43,7 @@ export default class SimulatorWebSocket {
   }
 
   onMessage(event) {
-    console.log(event.data);
+    if(this.simulator.debug) console.log(event.data);
     let messages = JSON.parse(event.data);
     for (let message of messages) {
       let type = message["type"];

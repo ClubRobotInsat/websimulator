@@ -6,44 +6,36 @@ export function ready(fn) {
   }
 };
 
-export function getById(i) {
-  return document.getElementById(i);
-};
-
-export function getByClass(c) {
-  return Array.prototype.slice.call(document.getElementsByClassName(c));
-};
-
 export function hideConnectionDialog() {
-  getById("connect").classList.add("hidden");
+  document.getElementById("connect").classList.add("hidden");
 };
 
 export function goodIp() {
-  getById("connect-btn").classList.add("btn-success");
-  getById("connect-btn").classList.remove("btn-danger");
-  getById("bad-ip").classList.add("hidden");
+  document.getElementById("connect-btn").classList.add("btn-success");
+  document.getElementById("connect-btn").classList.remove("btn-danger");
+  document.getElementById("bad-ip").classList.add("hidden");
 };
 
 export function badIp() {
-  getById("connect-btn").classList.remove("btn-success");
-  getById("connect-btn").classList.add("btn-danger");
-  getById("bad-ip").classList.remove("hidden");
+  document.getElementById("connect-btn").classList.remove("btn-success");
+  document.getElementById("connect-btn").classList.add("btn-danger");
+  document.getElementById("bad-ip").classList.remove("hidden");
 };
 
 export function showInfos() {
-  getById("infos").style.display = "block";
+  document.getElementById("infos").style.display = "block";
 };
 
 export function hideInfos() {
-  getById("infos").style.display = "none";
+  document.getElementById("infos").style.display = "none";
 };
 
 export function disconnected() {
-  getById("disconnected").style.display = "block";
+  document.getElementById("disconnected").style.display = "block";
 };
 
 export function addToConsole(string, color) {
   let parent = document.createElement("div");
   parent.innerHTML = `<span style="color: #${color.split("x")[1]}"> ${string}</span>`;
-  getById("messages").appendChild(parent);
+  document.getElementById("messages").appendChild(parent);
 };

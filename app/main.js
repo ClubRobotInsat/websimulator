@@ -8,13 +8,13 @@ let debug = false;
 View.ready(() => {
 	window.addEventListener("keypress", function(e) {
 		if (e.which == 96 || e.which == 126) {
-			let cons = View.getById("console");
+			let cons = document.getElementById("console");
 			if(cons.style.display == "block") cons.style.display = "none";
 			else cons.style.display = "block";
 		}
 	});
 
-	View.getById("debug-btn").addEventListener("click", (event) => {
+	document.getElementById("debug-btn").addEventListener("click", (event) => {
 		debug = !debug;
 		if(debug) {
 			event.target.classList.add("btn-success");
@@ -27,9 +27,9 @@ View.ready(() => {
 		}
 	});
 
-	View.getById("connect-btn").addEventListener("click", (event) => {
+	document.getElementById("connect-btn").addEventListener("click", (event) => {
 		event.preventDefault();
-		let simulator = new Simulator(View.getById("host").value, View.getById("port").value, debug);
+		let simulator = new Simulator(document.getElementById("host").value, document.getElementById("port").value, debug);
 		if(debug) {
 			window.three = THREE;
 			window.simulator = simulator;
