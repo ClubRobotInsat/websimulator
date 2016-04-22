@@ -28,7 +28,7 @@ export default class SimulatorGraphics {
     this.scene.add(new THREE.AxisHelper(50));
 
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000);
-    this.camera.position.set(0, 3, 8);
+    this.camera.position.set(48, 40, 20);
     this.camera.up.set( 0, 0, 1 );
     this.camera.lookAt(this.scene.position);
 

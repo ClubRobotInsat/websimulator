@@ -39,7 +39,9 @@ export default class World {
     let position = new THREE.Vector3();
     position.setFromMatrixPosition(obj.matrix);
     document.getElementById("selected-id").innerText = obj.objectId;
-    document.getElementById("selected-position").innerText = position.x + "," + position.y + "," + position.z;
+    document.getElementById("selected-position").innerText = Math.round(position.x * 100) / 100 + ","
+      + Math.round(position.y * 100) / 100 + ","
+      + Math.round(position.z * 100) / 100;
   }
 
   initRaycast() {
