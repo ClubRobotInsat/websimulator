@@ -54,6 +54,11 @@ body {
   float: right;
 }
 
+#graphics {
+  float: right;
+  margin-right: 10px;
+}
+
 .title {
   font-size: 18px;
   font-weight: 500;

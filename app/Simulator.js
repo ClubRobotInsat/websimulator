@@ -7,8 +7,12 @@ import * as ModelLoader from "./ModelLoader";
 import * as View from "./View";
 
 export default class Simulator {
-  constructor(host, port, debug=false) {
+  constructor(host, port, debug=false, highGraphics=true) {
     this.debug = debug;
+    this.highGraphics = highGraphics;
+
+    console.log(highGraphics);
+
     try {
       this.socket = new SimulatorWebSocket(this, host, port);
       if(this.debug) {

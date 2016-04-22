@@ -13,9 +13,10 @@ export default class SimulatorGraphics {
     //init Renderer
     if(Detector.webgl) {
       this.renderer = new THREE.WebGLRenderer({antialias: true});
-      this.renderer.shadowMap.enabled = true;
-      this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
+      if(this.simulator.highGraphics) {
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      }
     } else {
       this.renderer = new THREE.CanvasRenderer();
     }
@@ -53,8 +54,8 @@ export default class SimulatorGraphics {
     );
 
 		ground.position.set(0, 0, -0.2);
-		ground.scale.set(100, 100, 100);
 
+		ground.scale.set(100, 100, 100);
 		ground.castShadow = false;
 		ground.receiveShadow = true;
 

@@ -4,6 +4,7 @@ import * as View from "./View";
 import THREE from "three";
 
 let debug = false;
+let highGraphics = true;
 
 View.ready(() => {
 	window.addEventListener("keypress", function(e) {
@@ -27,9 +28,22 @@ View.ready(() => {
 		}
 	});
 
+	document.getElementById("graphics-btn").addEventListener("click", (event) => {
+		highGraphics = !highGraphics;
+		if(highGraphics) {
+			event.target.classList.add("btn-primary");
+			event.target.classList.remove("btn-warning");
+			event.target.innerText = "HIGH";
+		} else {
+			event.target.classList.remove("btn-primary");
+			event.target.classList.add("btn-warning");
+			event.target.innerText = "LOW";
+		}
+	});
+
 	document.getElementById("connect-btn").addEventListener("click", (event) => {
 		event.preventDefault();
-		let simulator = new Simulator(document.getElementById("host").value, document.getElementById("port").value, debug);
+		let simulator = new Simulator(document.getElementById("host").value, document.getElementById("port").value, debug, highGraphics);
 		if(debug) {
 			window.three = THREE;
 			window.simulator = simulator;
