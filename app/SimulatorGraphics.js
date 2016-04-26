@@ -49,26 +49,17 @@ export default class SimulatorGraphics {
 
   initScene() {
   	let ground = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(100, 100),
-      new THREE.MeshPhongMaterial({color: 0x383838})
+      new THREE.PlaneBufferGeometry(0.35, 0.30),
+      new THREE.MeshPhongMaterial({color: 0x383838, transparent: false, side: THREE.DoubleSide})
     );
 
-		ground.position.set(0, 0, -0.2);
+		ground.position.set(15, 10, -1);
 
 		ground.scale.set(100, 100, 100);
 		ground.castShadow = false;
 		ground.receiveShadow = true;
 
 		this.scene.add(ground);
-
-    let loader = new THREE.OBJLoader();
-    loader.load("../models/bb8.obj", (obj) => {
-      obj.scale.set(0.05, 0.05, 0.05);
-      obj.position.set(-10, 10, -0.2);
-      obj.rotation.set(Math.PI / 2, Math.PI, 0);
-      obj.castShadow = true;
-      this.scene.add(obj);
-    });
     // this.scene.fog = new THREE.Fog(0xE3E3E3, 15, 10);
   }
 
@@ -76,11 +67,11 @@ export default class SimulatorGraphics {
     let light = new THREE.AmbientLight(0xA6A6A6); // soft white light
     this.scene.add(light);
 
-    var target = new THREE.Object3D();
+    let target = new THREE.Object3D();
     target.position.set(15, 10, 0);
     this.scene.add(target);
 
-    var spotLight = new THREE.SpotLight(0xffffff, 0.4);
+    let spotLight = new THREE.SpotLight(0xffffff, 0.4);
     spotLight.penumbra = 0.8;
     spotLight.position.set(30, 30, 50);
     spotLight.target = target;
