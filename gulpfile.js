@@ -24,14 +24,14 @@ gulp.task("buildjs", function() {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("buildcss", function() {
+gulp.task("buildcss", ["buildjs"], function() {
   return gulp.src("css/*.css")
     .pipe(minifycss())
     .pipe(concat("app.min.css"))
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("inject", function() {
+gulp.task("inject", ["buildcss"], function() {
   return gulp.src("index.html")
     .pipe(htmlreplace({
       "css": "app.min.css",
@@ -42,7 +42,7 @@ gulp.task("inject", function() {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("copymodels", function() {
+gulp.task("copymodels", ["inject"], function() {
     return gulp.src(["models/**/*"]).pipe(gulp.dest("dist/models"));
 });
 
