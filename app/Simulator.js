@@ -11,8 +11,6 @@ export default class Simulator {
     this.debug = debug;
     this.highGraphics = highGraphics;
 
-    console.log(highGraphics);
-
     try {
       this.socket = new SimulatorWebSocket(this, host, port);
       if(this.debug) {

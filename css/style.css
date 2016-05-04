@@ -50,6 +50,13 @@ body {
   display: none;
 }
 
+#coords {
+  position: fixed;
+  top: 0;
+  right: 10px;
+  color: white;
+}
+
 #debug {
   float: right;
 }
@@ -78,4 +85,9 @@ body {
   display:none;
   color:#FFF;
   text-align:left;
+}
+
+#point-infos {
+  position: fixed;
+  display: none;
 }

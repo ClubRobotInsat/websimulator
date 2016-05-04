@@ -91,6 +91,26 @@ export default class SimulatorGraphics {
 
   }
 
+  getScreenPosition(obj) {
+    let vector = new THREE.Vector3();
+
+    let widthHalf = 0.5*this.renderer.context.canvas.width;
+    let heightHalf = 0.5*this.renderer.context.canvas.height;
+
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(this.camera);
+
+    vector.x = (vector.x * widthHalf) + widthHalf;
+    vector.y = -(vector.y * heightHalf) + heightHalf;
+
+    return {
+      x: vector.x,
+      y: vector.y
+    };
+
+  }
+
   animate() {
     if(this.simulator.socket.connected || this.simulator.debug) {
       requestAnimationFrame(() => this.animate());
